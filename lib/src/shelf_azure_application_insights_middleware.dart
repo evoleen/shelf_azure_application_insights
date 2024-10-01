@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:azure_application_insights/azure_application_insights.dart';
 import 'package:http/http.dart';
 import 'package:shelf/shelf.dart';
@@ -47,6 +48,9 @@ void _buildTelemetryClient(
 Middleware azureApplicationInsightsMiddleware(
         {String? connectionString, TelemetryClient? telemetryClient}) =>
     (innerHandler) {
+      connectionString ??=
+          Platform.environment['APPLICATIONINSIGHTS_CONNECTION_STRING'];
+
       // ensure client exists
       _buildTelemetryClient(
           connectionString: connectionString, telemetryClient: telemetryClient);

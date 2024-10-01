@@ -27,4 +27,8 @@ Response _echoRequest(Request request) =>
 
 ## Additional information
 
-Use either a connection string or an existing instance of `TelemetryClient`. If neither is supplied, no telemetry will be submitted.
+The middleware will auto-configure itself if deployed on Azure and a connection to Application Insights is setup. Auto-configuration happens by reading the environment variable `APPLICATIONINSIGHTS_CONNECTION_STRING`.
+
+Alternatively either a connection or an existing instance of `TelemetryClient` can be supplied.
+
+If no parameters are supplied and the environment variable doesn't exist, the middleware will not submit any logs (but also not produce any errors).
