@@ -60,11 +60,10 @@ Middleware azureApplicationInsightsMiddleware(
         var watch = Stopwatch()..start();
 
         return Future.sync(() => innerHandler(request)).then((response) {
-          _telemetryClient?.trackRequest(
-            id: request.hashCode.toString(),
-            duration: watch.elapsed,
-            responseCode: response.statusCode.toString(),
-          );
+          _telemetryClient?.trackTrace(
+              severity: Severity.verbose,
+              message:
+                  ' ${response.statusCode} ${request.method} ${watch.elapsed} ${request.requestedUri}');
 
           return response;
         }, onError: (Object error, StackTrace stackTrace) {
